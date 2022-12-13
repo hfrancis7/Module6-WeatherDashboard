@@ -6,7 +6,15 @@ const API_KEY = "861f2cb6b96250af24f566edb2fe2923";
 
 function search(){
     var searchInput = $("#search-input").val();
+    addToList(searchInput);
+    $("#search-input").val("");
     
+    
+    
+
+}
+
+function fetchAPI(searchInput){
     fetch("https://api.openweathermap.org/data/2.5/weather?q={" + searchInput  + "}&appid={" + API_KEY + "}")
     
     .then(function(response){
@@ -15,8 +23,16 @@ function search(){
     .then(function(data){
         console.log(data);
     });
+}
+
+function addToList(city){
+    //TODO: find a way to check to see if it's already on the list
+    //likely will use local storage
+    $("#city-list").append("<li><button type=\"button\" id=\"" + city + "\">" + city + "</button></li>");
 
 }
 
 $("#search-btn").click(search);
+
+
 
