@@ -1,0 +1,24 @@
+.red{
+    border: 2px solid red;
+    padding: 10px;
+    margin: 10px;
+}
+
+.blue{
+    border: 2px solid blue;
+    padding: 10px;
+    margin: 10px;
+
+}
+
+.green{
+    border: 2px solid green;
+    padding: 10px;
+    margin: 10px;
+}
+
+.purple{
+    border: 2px solid purple;
+    padding: 10px;
+    margin: 10px;
+}
