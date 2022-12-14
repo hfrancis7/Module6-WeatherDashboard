@@ -41,6 +41,15 @@ function addToList(city){
 
 }
 
+function displayList(){
+    Object.keys(localStorage).forEach((key) => {
+        if(key.includes("HDF-weatherApp-")){
+            var name = localStorage.getItem(key);
+            $("#city-list").append("<button type=\"button\" class=\"saved-city\">" + name + "</button>");
+        }
+    });
+}
+
 function fahrenheit(kelvin){
     return Math.round(1.8 * (kelvin - 273.15) + 32);
 }
@@ -49,6 +58,7 @@ function mph(mps){
     return (mps / 0.44704).toFixed(1);
 }
 
+displayList();
 $("#search-btn").click(search);
 $("#city-list").on("click", ".saved-city", function(){
     fetchAPI($(this).text());
