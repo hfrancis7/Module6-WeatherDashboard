@@ -14,7 +14,16 @@ function fetchAPI(input){
     var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=" + API_KEY;
     fetch(queryURL)
         .then(function(response){
-            return response.json();
+            if(response.ok){
+                return response.json();
+            }else if(response.status == 400){
+                alert("HTTP-Error: " + response.status + "\nPlease enter a valid city name in the Search bar.");
+            }else if(response.status == 404){
+                alert("HTTP-Error: " + response.status + "\nThe city name you entered is not valid.\nPlease enter a valid city name in the Search bar.");
+            }else{
+                alert("HTTP-Error: " + response.status);
+            }
+            
         })
         .then(function(data){
             var name = data.name;
