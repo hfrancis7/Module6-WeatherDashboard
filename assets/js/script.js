@@ -26,15 +26,13 @@ function fetchAPI(input){
 function displayToday(city){
     $("#today-city-name").text("City: " + city.name + " (date)");
     $("#today-city-temp").text("Temperature: " + fahrenheit(city.main.temp) + '\u00B0F');
-    $("#today-city-wind").text("Wind: " + city.wind.speed);
-    $("#today-city-humidity").text("Humidity: " + city.main.humidity);
-    console.log("yes");
+    $("#today-city-wind").text("Wind: " + mph(city.wind.speed) + " MPH");
+    $("#today-city-humidity").text("Humidity: " + city.main.humidity + "%");
 }
 
 function addToList(city){
-    //TODO: find a way to check to see if it's already on the list
-    //likely will use local storage
-    $("#city-list").append("<li><button type=\"button\" id=\"" + city + "\">" + city + "</button></li>");
+    localStorage.setItem(city, city);
+    $("#city-list").append("<button type=\"button\" class=\"saved-city\">" + city + "</button>");
 
 }
 
@@ -42,7 +40,14 @@ function fahrenheit(kelvin){
     return Math.round(1.8 * (kelvin - 273.15) + 32);
 }
 
+function mph(mps){
+    return (mps / 0.44704).toFixed(1);
+}
+
 $("#search-btn").click(search);
+$("#city-list").on("click", ".saved-city", function(){
+    fetchAPI($(this).text());
+})
 
 
 
