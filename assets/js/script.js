@@ -1,4 +1,5 @@
 const API_KEY = "861f2cb6b96250af24f566edb2fe2923";
+const date = dayjs().format("MM/DD/YY");
 
 //TODO: When you type a city into search input:
     //add city to existing list, saving data about the city to be referred to later
@@ -37,7 +38,7 @@ function fetchAPI(input){
 }
 
 function displayToday(city){
-    $("#today-city-name").text("City: " + city.name + " (date)");
+    $("#today-city-name").text("City: " + city.name + " ("+ date +")");
     $("#today-city-temp").text("Temperature: " + fahrenheit(city.main.temp) + '\u00B0F');
     $("#today-city-wind").text("Wind: " + mph(city.wind.speed) + " MPH");
     $("#today-city-humidity").text("Humidity: " + city.main.humidity + "%");
