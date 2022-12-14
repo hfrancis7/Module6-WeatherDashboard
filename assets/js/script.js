@@ -1,5 +1,4 @@
 const API_KEY = "861f2cb6b96250af24f566edb2fe2923";
-const date = dayjs().format("MM/DD/YY");
 
 //TODO: 
     //5-day forecast
@@ -13,7 +12,7 @@ function search(){
 
 //crates a fetch, returning alerts if there are errors, returning API data if status ok, calls functions to display data from API
 function fetchAPI(input){
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=" + API_KEY;
+    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=" + API_KEY +"&units=imperial";
     fetch(queryURL)
         .then(function(response){
             if(response.ok){
@@ -40,9 +39,11 @@ function fetchAPI(input){
 
 //Displays the relevant information using today's date
 function displayToday(city){
-    $("#today-city-name").text("City: " + city.name + " ("+ date +")");
-    $("#today-city-temp").text("Temperature: " + fahrenheit(city.main.temp) + '\u00B0F');
-    $("#today-city-wind").text("Wind: " + mph(city.wind.speed) + " MPH");
+    var dateTest = dayjs.unix(city.dt).format("MM/DD/YY");
+    $("#today-city-name").text("City: " + city.name + " ("+ dateTest +") ");
+    $("#icon").attr("src","http://openweathermap.org/img/w/" + city.weather[0].icon + ".png")
+    $("#today-city-temp").text("Temperature: " + city.main.temp + '\u00B0F');
+    $("#today-city-wind").text("Wind: " + city.wind.speed + " MPH");
     $("#today-city-humidity").text("Humidity: " + city.main.humidity + "%");
 }
 
@@ -64,14 +65,8 @@ function displayList(){
     });
 }
 
-//converts Kelvin to Fahrenheit
-function fahrenheit(kelvin){
-    return Math.round(1.8 * (kelvin - 273.15) + 32);
-}
+function display_5day(){
 
-//converts m/s to mph
-function mph(mps){
-    return (mps / 0.44704).toFixed(1);
 }
 
 //BUTTONS

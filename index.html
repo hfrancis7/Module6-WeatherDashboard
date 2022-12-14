@@ -39,7 +39,9 @@
             <section class="blue">
                 <!-- Current Day-->
                 <section class="green">
-                    <h3 id="today-city-name">City: (date)</h3>
+                    <figure class="d-flex">
+                        <h3 id="today-city-name">City: </h3><img src="" id="icon">
+                    </figure>
                     <p id="today-city-temp">Temperature: </p>
                     <p id="today-city-wind">Wind: </p>
                     <p id="today-city-humidity">Humidity: </p>
@@ -50,13 +52,14 @@
                     <h3>5-Day Forecast</h3>
 
                     <!-- Flex row for 5 day forecast-->
-                    <section></section>
-
+                    <section id="5-day-container"></section>
                 </section>
             </section>
+
         </main>
     </body>
 
+    <!-- DayJS Script -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"></script>
     <!-- Added link to the jQuery library -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
