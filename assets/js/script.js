@@ -6,7 +6,6 @@ const API_KEY = "861f2cb6b96250af24f566edb2fe2923";
 
 function search(){
     var searchInput = $("#search-input").val();
-    addToList(searchInput);
     fetchAPI(searchInput);
     $("#search-input").val("");
 }
@@ -18,8 +17,13 @@ function fetchAPI(input){
             return response.json();
         })
         .then(function(data){
-            console.log(data);
+            var name = data.name;
+            var testKey = "HDF-weatherApp-" + name;
+            if(!(localStorage.getItem(testKey))){
+                addToList(name);
+            }
             displayToday(data);
+            
         });
 }
 
@@ -31,7 +35,8 @@ function displayToday(city){
 }
 
 function addToList(city){
-    localStorage.setItem(city, city);
+    var key = "HDF-weatherApp-" + city;
+    localStorage.setItem(key, city);
     $("#city-list").append("<button type=\"button\" class=\"saved-city\">" + city + "</button>");
 
 }
