@@ -13,6 +13,40 @@
 
 .green{
     border: 2px solid green;
+}
+
+.forecast-day-container{
+    display: none;
+    border: 2px solid purple;
     padding: 10px;
     margin: 10px;
+}
+
+.seperate-list{
+    border-bottom: 2px solid lightgray;
+    
+}
+
+button{
+    margin: 10px;  
+}
+
+.saved-city{
+    border: 1px solid lightgray;
+    border-radius: 1px;
+}
+
+.saved-city:hover{
+    background-color: gray;
+    border-color: darkgray;
+}
+
+#dashboard-banner{
+    background-image:linear-gradient(blue, lightblue);
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 5px;
+    color:white;
+    text-align: center;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
 }

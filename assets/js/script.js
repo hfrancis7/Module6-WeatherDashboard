@@ -3,15 +3,15 @@ const API_KEY = "861f2cb6b96250af24f566edb2fe2923";
 //TODO: 
     //5-day forecast
 
-//calls the fetchAPI function and clears the search input
+//calls the fetchWeatherAPI function and clears the search input
 function search(){
     var searchInput = $("#search-input").val();
-    fetchAPI(searchInput);
+    fetchWeatherAPI(searchInput);
     $("#search-input").val("");
 }
 
-//crates a fetch, returning alerts if there are errors, returning API data if status ok, calls functions to display data from API
-function fetchAPI(input){
+//crates a fetch for weather, returning alerts if there are errors, returning API data if status ok, calls functions to display data from API
+function fetchWeatherAPI(input){
     var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=" + API_KEY +"&units=imperial";
     fetch(queryURL)
         .then(function(response){
@@ -32,9 +32,32 @@ function fetchAPI(input){
             if(!(localStorage.getItem(testKey))){
                 addToList(name);
             }
+            fetchForecastAPI(name);
             displayToday(data);
             
         });
+}
+
+//creates a fetch for 5day forecast, returns alerts if there are errors, returning API data if status ok, calls functions to display 5-day forecast
+function fetchForecastAPI(input){
+    var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + input + "&appid=" + API_KEY +"&units=imperial&";
+    fetch(queryURL)
+        .then(function(response){
+            if(response.ok){
+                return response.json();
+            }else if(response.status == 400){
+                alert("HTTP-Error: " + response.status + "\nPlease enter a valid city name in the Search bar.");
+            }else if(response.status == 404){
+                alert("HTTP-Error: " + response.status + "\nThe city name you entered is not valid.\nPlease enter a valid city name in the Search bar.");
+            }else{
+                alert("HTTP-Error: " + response.status);
+            }
+            
+        })
+        .then(function(data){
+            display_5day(data);
+        });
+    
 }
 
 //Displays the relevant information using today's date
@@ -65,14 +88,15 @@ function displayList(){
     });
 }
 
-function display_5day(){
-
+function display_5day(city){
+    $(".forecast-day-container").show();
+    console.log(city);
 }
 
 //BUTTONS
 $("#search-btn").click(search);
 $("#city-list").on("click", ".saved-city", function(){
-    fetchAPI($(this).text());
+    fetchWeatherAPI($(this).text());
 })
 
 displayList();
