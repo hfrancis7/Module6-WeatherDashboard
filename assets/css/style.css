@@ -28,17 +28,30 @@
 }
 
 button{
-    margin: 10px;  
+    margin-bottom: 10px;
+    padding: 1.5px;
+    border-radius: 1.5px;  
+}
+
+#search-btn{
+    margin: 10px;
+    border: 1px solid darkblue;
+    background-color: blue;
+    color:white;
+}
+
+#search-btn:hover{
+    background-color: cornflowerblue;
+    border-color: cadetblue;
 }
 
 .saved-city{
     border: 1px solid lightgray;
-    border-radius: 1px;
 }
 
 .saved-city:hover{
-    background-color: gray;
-    border-color: darkgray;
+    background-color: lightgray;
+    border-color: gray;
 }
 
 #dashboard-banner{

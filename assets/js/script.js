@@ -1,5 +1,11 @@
 const API_KEY = "861f2cb6b96250af24f566edb2fe2923";
 
+var day1 = $("#day-1");
+var day2 = $("#day-2");
+var day3 = $("#day-3");
+var day4 = $("#day-4");
+var day5 = $("#day-5");
+
 //TODO: 
     //5-day forecast
 
@@ -90,6 +96,21 @@ function displayList(){
 
 function display_5day(city){
     $(".forecast-day-container").show();
+    day1.children("h4").text("Test/Date/1");
+    day2.children("h4").text("Test/Date/2");
+    day3.children("h4").text("Test/Date/3");
+    day4.children("h4").text("Test/Date/4");
+    day5.children("h4").text("Test/Date/5");
+
+    // day1.children("img").attr("src","http://openweathermap.org/img/w/" + city.weather[0].icon + ".png");
+    // day2.children("img").attr("src","http://openweathermap.org/img/w/" + city.weather[1].icon + ".png");
+    // day3.children("img").attr("src","http://openweathermap.org/img/w/" + city.weather[2].icon + ".png");
+    // day4.children("img").attr("src","http://openweathermap.org/img/w/" + city.weather[3].icon + ".png");
+    // day5.children("img").attr("src","http://openweathermap.org/img/w/" + city.weather[3].icon + ".png");
+    
+
+
+
     console.log(city);
 }
 
