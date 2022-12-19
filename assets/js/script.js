@@ -78,20 +78,26 @@ function buildForecast(city){
        //save the date of the current forecast in the list and the date of the forecast before it
        //if we are at i=0, then we just save the current date.
        //if the prevDate doesn't equal the current date, then we save the results and reset the process
-        var dateUnix = API_forecastList[i].dt;
-        curDate = dayjs.unix(dateUnix).format("MM/DD/YY");
-        curDateValidate = dayjs.unix(dateUnix).format();
-        if(i != 0){
-            var prevDateUnix = API_forecastList[i-1].dt;
-            prevDate = dayjs.unix(prevDateUnix).format("MM/DD/YY");
-        }else{
-            prevDate = curDate;
-        }
+
+       //took advice from fellow classmate to use dt_txt instead of dt to fix timezone issue
+       //The dates are formatted "YYYY-MM-DD hh:mm:ss"
+       // First split on the space which returns an array of 1. Next split the one index by '-' = ['YYYY', 'MM', 'DD']
+       curDate = (city.list[i].dt_txt.split(" ", 1))[0];
+       curDay = curDate.split("-", 3)[2];
+       curDate = curDate.split("-", 3)[1] + "/" + curDay + "/" + curDate.split("-", 3)[0];
+       if(i != 0){
+        prevDate = (city.list[i-1].dt_txt.split(" ", 1))[0];
+        prevDay = prevDate.split("-", 3)[2];
+        prevDate = prevDate.split("-", 3)[1] + "/" + prevDay + "/" + prevDate.split("-", 3)[0];
+       }else{
+        prevDate = curDate;
+        prevDay = curDay;
+       }
+
         //if the date is today, then we move on to the next iteration of the loop
         console.log("i",i);
         console.log("curDate",curDate);
         console.log("prevDate",prevDate);
-        console.log("validating current date",curDateValidate)
 
         if(curDate == today){
             continue;
