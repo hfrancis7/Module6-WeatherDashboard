@@ -1,14 +1,5 @@
 const API_KEY = "861f2cb6b96250af24f566edb2fe2923";
 
-var day1 = $("#day-1");
-var day2 = $("#day-2");
-var day3 = $("#day-3");
-var day4 = $("#day-4");
-var day5 = $("#day-5");
-
-//TODO: 
-    //5-day forecast
-
 //calls the fetchWeatherAPI function and clears the search input
 function search(){
     var searchInput = $("#search-input").val();
@@ -61,12 +52,12 @@ function fetchForecastAPI(input){
             
         })
         .then(function(data){
-            buildForecast(data);
             display_5day(data);
         });
     
 }
 
+//builds an array of forecast objects that can used to display the average 5-day forecast weather info
 function buildForecast(city){
     //API returns 40 forecasts, 3 hour increments. 
     var API_forecastList = city.list;
@@ -76,6 +67,9 @@ function buildForecast(city){
     var temp_low = 1000;
     var prevDate = today;
     var curDate = today;
+    var avg_windSpeed = 0;
+    var avg_humidity = 0;
+    var dataPts = 0;
 
     //get date from each object
     for(i = 0; i < API_forecastList.length; i++){
@@ -90,12 +84,8 @@ function buildForecast(city){
         }else{
             prevDate = curDate;
         }
-        console.log("i", i);
-        console.log("currentDate", curDate);
-        console.log("prevDate", prevDate);
         //if the date is today, then we move on to the next iteration of the loop
         if(curDate == today){
-            console.log("continued", true);
             continue;
         }
 
@@ -105,11 +95,17 @@ function buildForecast(city){
                 date: prevDate,
                 highTemp: temp_high,
                 lowTemp: temp_low,
+                windSpeed: (avg_windSpeed / dataPts).toFixed(2), //find the mean wind speed to 2 decimal places
+                //humidity: (avg_humidity / dataPts).toFixed(0), //finds the mean humidity
+                
             }
             console.log("newForecast", newForecast)
             forecasts.push(newForecast);
             temp_high = -1000;
             temp_low = 1000;
+            avg_windSpeed = 0;
+            //avg_humidity = 0;
+            dataPts = 0;
         }
 
         if(temp_high < city.list[i].main.temp_max){
@@ -118,22 +114,10 @@ function buildForecast(city){
         if(temp_low > city.list[i].main.temp_min){
             temp_low = city.list[i].main.temp_min;
         }
-        console.log("temp_low", temp_low);
-        console.log("temp_high", temp_high);
-        
-
-        // console.log("date",date);
-        // console.log ("temp_high",temp_high);
-        // console.log("temp_low", temp_low);
+        avg_windSpeed += city.list[i].wind.speed; //adding up all wind speeds of current day
+        //avg_humidity += city.list[i].main.humidity; //adding up all humidity
+        dataPts++; //getting data points for current day to later divide by
     }
-
-    //log the last forecast
-    var lastForecast = {
-        date: curDate,
-        highTemp: temp_high,
-        lowTemp: temp_low,
-    }
-    forecasts.push(lastForecast);
 
     return forecasts;
 
@@ -145,9 +129,9 @@ function buildForecast(city){
 //Displays the relevant information using today's date
 function displayToday(city){
     var dateTest = dayjs.unix(city.dt).format("MM/DD/YY");
-    $("#today-city-name").text("City: " + city.name + " ("+ dateTest +") ");
+    $("#today-city-name").text(city.name + " ("+ dateTest +") ");
     $("#icon").attr("src","http://openweathermap.org/img/w/" + city.weather[0].icon + ".png")
-    $("#today-city-temp").text("Temperature: " + city.main.temp + '\u00B0F');
+    $("#today-city-temp").text("Temperature: " + city.main.temp + "\u00B0F");
     $("#today-city-wind").text("Wind: " + city.wind.speed + " MPH");
     $("#today-city-humidity").text("Humidity: " + city.main.humidity + "%");
 }
@@ -175,21 +159,18 @@ function display_5day(city){
     var forecastList = buildForecast(city);
     console.log(forecastList);
     $(".forecast-day-container").show();
-    day1.children("h4").text("Test/Date/1");
-    day2.children("h4").text("Test/Date/2");
-    day3.children("h4").text("Test/Date/3");
-    day4.children("h4").text("Test/Date/4");
-    day5.children("h4").text("Test/Date/5");
 
-    // day1.children("img").attr("src","http://openweathermap.org/img/w/" + city.weather[0].icon + ".png");
-    // day2.children("img").attr("src","http://openweathermap.org/img/w/" + city.weather[1].icon + ".png");
-    // day3.children("img").attr("src","http://openweathermap.org/img/w/" + city.weather[2].icon + ".png");
-    // day4.children("img").attr("src","http://openweathermap.org/img/w/" + city.weather[3].icon + ".png");
-    // day5.children("img").attr("src","http://openweathermap.org/img/w/" + city.weather[3].icon + ".png");
+    var i = 0;
+    $(".forecast-day-container").each(function(){
+        $(this).children(".current-forecast-date").text(forecastList[i].date);
+        //$(this).children("img").attr(attr("src","http://openweathermap.org/img/w/" + city.weather[0].icon + ".png");)
+        $(this).children(".high").text("High: " + forecastList[i].highTemp + "\u00B0F");
+        $(this).children(".low").text("Low: " + forecastList[i].lowTemp + "\u00B0F");
+        $(this).children(".wind").text("Avg Wind: " + forecastList[i].windSpeed + " MPH");
+        //$(this).children(".humidity").text("Avg Humidity: " + forecastList[i].humidity + "%");
+        i++;
+    })
     
-
-
-
     console.log(city);
 }
 
@@ -200,6 +181,3 @@ $("#city-list").on("click", ".saved-city", function(){
 })
 
 displayList();
-
-
-
