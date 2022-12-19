@@ -80,6 +80,7 @@ function buildForecast(city){
        //if the prevDate doesn't equal the current date, then we save the results and reset the process
         var dateUnix = API_forecastList[i].dt;
         curDate = dayjs.unix(dateUnix).format("MM/DD/YY");
+        curDateValidate = dayjs.unix(dateUnix).format();
         if(i != 0){
             var prevDateUnix = API_forecastList[i-1].dt;
             prevDate = dayjs.unix(prevDateUnix).format("MM/DD/YY");
@@ -89,6 +90,8 @@ function buildForecast(city){
         //if the date is today, then we move on to the next iteration of the loop
         console.log("i",i);
         console.log("curDate",curDate);
+        console.log("prevDate",prevDate);
+        console.log("validating current date",curDateValidate)
 
         if(curDate == today){
             continue;
@@ -123,7 +126,7 @@ function buildForecast(city){
         avg_humidity += city.list[i].main.humidity; //adding up all humidity
         dataPts++; //getting data points for current day to later divide by
 
-        console.log("temp_high". temp_high);
+        console.log("temp_high", temp_high);
         console.log("temp_low", temp_low);
     }
 
@@ -189,8 +192,6 @@ function display_5day(city){
         $(this).children(".humidity").text("Avg Humidity: " + forecastList[i].humidity + "%");
         i++;
     })
-    
-    console.log(city);
 }
 
 //BUTTONS
