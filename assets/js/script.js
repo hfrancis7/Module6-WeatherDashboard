@@ -118,6 +118,7 @@ function buildForecast(city){
 
         //if the dates have transitioned to the next day, save the previous date's data and reset
         if((curDate != prevDate) && (prevDate != today)){
+            iconNum = mostIcon(iconsUsed);
             var newForecast = {
                 date: prevDate,
                 highTemp: temp_high,
@@ -128,7 +129,6 @@ function buildForecast(city){
                 
             }
             console.log("newForecast", newForecast);
-            iconNum = mostIcon(iconsUsed);
             console.log("iconNum", iconNum);
             forecasts.push(newForecast);
             temp_high = -1000;
@@ -193,6 +193,7 @@ function buildForecast(city){
 
 }
 
+//returns id using name of icon
 function mostIcon(iconList){
     const iconID ={
         "clearSky": "01",
@@ -225,6 +226,7 @@ function mostIcon(iconList){
         case "thunderstorm": return iconID.thunderstorm;
         case "snow": return iconID.snow;
         case "mist": return iconID.mist;
+        default: console.log("ERROR");return iconID.clearSky;
     }
 }
 
@@ -257,7 +259,7 @@ function displayList(){
     });
 }
 
-
+//displays 5 day forecast
 function display_5day(city){
     var forecastList = buildForecast(city);
     console.log(forecastList);
@@ -266,7 +268,7 @@ function display_5day(city){
     var i = 0;
     $(".forecast-day-container").each(function(){
         $(this).children(".current-forecast-date").text(forecastList[i].date);
-        //$(this).children("img").attr(attr("src","http://openweathermap.org/img/w/" + city.weather[0].icon + ".png");)
+        $(this).children("img").attr("src","http://openweathermap.org/img/w/" + forecastList[i].icon + ".png");
         $(this).children(".high").text("High: " + forecastList[i].highTemp + "\u00B0F");
         $(this).children(".low").text("Low: " + forecastList[i].lowTemp + "\u00B0F");
         $(this).children(".wind").text("Avg Wind: " + forecastList[i].windSpeed + " MPH");
