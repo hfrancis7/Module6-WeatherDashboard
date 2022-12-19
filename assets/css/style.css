@@ -70,15 +70,18 @@ button{
     border-color: gray;
 }
 
+/*adds footer style background to bottom */
 .foot{
     background-image:linear-gradient(lightblue, blue);
 }
 
+/*Makes all hyperlinks white with underline text*/
 a{
     color:white;
     text-decoration: underline;
   }
 
+/*makes all hyperlinks color lightblue on hover */
 a:hover{
     color: lightblue;
 }
