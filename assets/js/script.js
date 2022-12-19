@@ -89,10 +89,8 @@ function buildForecast(city){
         //if the date is today, then we move on to the next iteration of the loop
         console.log("i",i);
         console.log("curDate",curDate);
-        console.log("today",today);
 
         if(curDate == today){
-            console.log("continue", true)
             continue;
         }
 
@@ -124,6 +122,9 @@ function buildForecast(city){
         avg_windSpeed += city.list[i].wind.speed; //adding up all wind speeds of current day
         avg_humidity += city.list[i].main.humidity; //adding up all humidity
         dataPts++; //getting data points for current day to later divide by
+
+        console.log("temp_high". temp_high);
+        console.log("temp_low", temp_low);
     }
 
     //there was likely a way to do this in the loop to avoid repetition
