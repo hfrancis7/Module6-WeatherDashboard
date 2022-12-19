@@ -61,10 +61,58 @@ function fetchForecastAPI(input){
             
         })
         .then(function(data){
+            buildForecast(data);
             display_5day(data);
         });
     
 }
+
+function buildForecast(city){
+    //API returns 40 forecasts, 3 hour increments. 
+    var API_forecastList = city.list;
+    var today = dayjs().format("MM/DD/YY");
+    var forecasts = [];
+    var temp_high = 0;
+    var temp_low = 1000;
+    var prevDate = today;
+
+    //get date from each object
+    for(i = 0; i < API_forecastList.length; i++){
+       //save the date of the current forecast in the list and the date of the forecast before it
+       //if we are at i=0, then we just save the current date.
+       //if the prevDate doesn't equal the current date, then we save the results and reset the process
+        var dateUnix = API_forecastList[i].dt;
+        var date = dayjs.unix(dateUnix).format("MM/DD/YY");
+        if(i != 0){
+            var prevDateUnix = API_forecastList[i-1].dt;
+            prevDate = dayjs.unix(prevDateUnix).format("MM/DD/YY");
+        }else{
+            prevDate = date;
+        }
+
+
+        if(date == today){
+            continue;
+        }
+        if(temp_high < city.list[i].main.temp_max){
+            temp_high = city.list[i].main.temp_max;
+        }
+        if(temp_low > city.list[i].main.temp_min){
+            temp_low = city.list[i].main.temp_min;
+        }
+
+        console.log("date",date);
+        console.log ("temp_high",temp_high);
+        console.log("temp_low", temp_low);
+
+        
+
+    }
+
+    
+
+}
+
 
 //Displays the relevant information using today's date
 function displayToday(city){
@@ -93,6 +141,7 @@ function displayList(){
         }
     });
 }
+
 
 function display_5day(city){
     $(".forecast-day-container").show();

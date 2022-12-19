@@ -1,31 +1,51 @@
-.blue{
-    border: 2px solid blue;
+/* Styling the top banner */
+#dashboard-banner, .foot{
+    background-image:linear-gradient(blue, lightblue);
+    padding: 10px;
+    width: 100%;
+    color:white;
+    text-align: center;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+}
+
+/* Holds all weather data, stretches it across screen*/
+.weather-container{
     padding: 10px;
     margin: 10px;
+    width: 100%;
 }
 
-.green{
-    border: 2px solid green;
+/* border and padding around today's weather */
+.current-day{
+    border: 2px solid darkgray;
+    padding: 10px;
 }
 
+/* containers for each of the 5-day forecast data */
 .forecast-day-container{
     display: none;
-    border: 2px solid purple;
+    color: white;
+    background-color: darkblue;
+    border: 1px solid darkblue;
+    border-radius: 5px;
     padding: 10px;
     margin: 10px;
 }
 
+/* seperating buttons within the list of buttons */
 .seperate-list{
     border-bottom: 2px solid lightgray;
     
 }
 
+/* generic styling rules for buttons, adding margin, padding, and border radius */
 button{
     margin-bottom: 10px;
     padding: 1.5px;
     border-radius: 1.5px;  
 }
 
+/* adding rules for the search button */
 #search-btn{
     margin: 10px;
     border: 1px solid darkblue;
@@ -33,26 +53,32 @@ button{
     color:white;
 }
 
+/* change color on hover for search button */
 #search-btn:hover{
     background-color: cornflowerblue;
     border-color: cadetblue;
 }
 
+/* buttons for saved city coloring */
 .saved-city{
     border: 1px solid lightgray;
 }
 
+/* change color for hover on saved city buttons */
 .saved-city:hover{
     background-color: lightgray;
     border-color: gray;
 }
 
-#dashboard-banner{
-    background-image:linear-gradient(blue, lightblue);
-    padding: 10px;
-    width: 100%;
-    margin-bottom: 5px;
+.foot{
+    background-image:linear-gradient(lightblue, blue);
+}
+
+a{
     color:white;
-    text-align: center;
-    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+    text-decoration: underline;
+  }
+
+a:hover{
+    color: lightblue;
 }
