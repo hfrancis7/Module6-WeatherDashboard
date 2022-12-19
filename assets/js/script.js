@@ -76,6 +76,17 @@ function buildForecast(city){
     var avg_windSpeed = 0;
     var avg_humidity = 0;
     var dataPts = 0;
+    var iconsUsed = {
+        "clearSky": 0,
+        "fewClouds": 0,
+        "scatteredClouds": 0,
+        "brokenClouds": 0,
+        "showerRain": 0,
+        "rain": 0,
+        "thunderstorm": 0,
+        "snow": 0,
+        "mist": 0,
+    }
 
     //get date from each object
     for(i = 0; i < API_forecastList.length; i++){
@@ -100,10 +111,6 @@ function buildForecast(city){
         }
 
         //if the date is today, then we move on to the next iteration of the loop
-        console.log("i",i);
-        console.log("curDate",curDate);
-        console.log("prevDate",prevDate);
-
         if(curDate == today){
             continue;
         }
@@ -116,15 +123,28 @@ function buildForecast(city){
                 lowTemp: temp_low,
                 windSpeed: (avg_windSpeed / dataPts).toFixed(2), //find the mean wind speed to 2 decimal places
                 humidity: (avg_humidity / dataPts).toFixed(0), //finds the mean humidity
+                //icon: iconNum + "d",
                 
             }
-            console.log("newForecast", newForecast)
+            console.log("newForecast", newForecast);
             forecasts.push(newForecast);
             temp_high = -1000;
             temp_low = 1000;
             avg_windSpeed = 0;
             avg_humidity = 0;
             dataPts = 0;
+            console.log(iconsUsed);
+            iconsUsed = {
+                "clearSky": 0,
+                "fewClouds": 0,
+                "scatteredClouds": 0,
+                "brokenClouds": 0,
+                "showerRain": 0,
+                "rain": 0,
+                "thunderstorm": 0,
+                "snow": 0,
+                "mist": 0,
+            }
         }
 
         if(temp_high < city.list[i].main.temp_max){
@@ -137,8 +157,21 @@ function buildForecast(city){
         avg_humidity += city.list[i].main.humidity; //adding up all humidity
         dataPts++; //getting data points for current day to later divide by
 
-        console.log("temp_high", temp_high);
-        console.log("temp_low", temp_low);
+        var icon = (city.list[i].weather[0].icon).substring(0,2);
+        switch(icon){
+            case "01": iconsUsed.clearSky += 1; break;
+            case "02": iconsUsed.fewClouds += 1; break;
+            case "03": iconsUsed.scatteredClouds += 1; break;
+            case "04": iconsUsed.brokenClouds += 1; break;
+            case "09": iconsUsed.showerRain += 1; break;
+            case "10": iconsUsed.rain += 1; break;
+            case "11": iconsUsed.thunderstorm += 1; break;
+            case "13": iconsUsed.snow += 1; break;
+            case "50": iconsUsed.mist += 1; break;
+            default: console.log("failure", icon);
+            
+        }
+        
     }
 
     //there was likely a way to do this in the loop to avoid repetition
