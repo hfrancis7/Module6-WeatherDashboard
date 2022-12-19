@@ -76,6 +76,7 @@ function buildForecast(city){
     var avg_windSpeed = 0;
     var avg_humidity = 0;
     var dataPts = 0;
+    var iconNum = "";
     var iconsUsed = {
         "clearSky": 0,
         "fewClouds": 0,
@@ -86,18 +87,6 @@ function buildForecast(city){
         "thunderstorm": 0,
         "snow": 0,
         "mist": 0,
-    }
-    const iconID =
-    {
-        "clearSky": "01",
-        "fewClouds": "02",
-        "scatteredClouds": "03",
-        "brokenClouds": "04",
-        "showerRain": "09",
-        "rain": "10",
-        "thunderstorm": "11",
-        "snow": "13",
-        "mist": "50",
     }
 
     //get date from each object
@@ -135,18 +124,18 @@ function buildForecast(city){
                 lowTemp: temp_low,
                 windSpeed: (avg_windSpeed / dataPts).toFixed(2), //find the mean wind speed to 2 decimal places
                 humidity: (avg_humidity / dataPts).toFixed(0), //finds the mean humidity
-                //icon: iconNum + "d",
+                icon: iconNum + "d",
                 
             }
             console.log("newForecast", newForecast);
-            mostIcon(iconsUsed);
+            iconNum = mostIcon(iconsUsed);
+            console.log("iconNum", iconNum);
             forecasts.push(newForecast);
             temp_high = -1000;
             temp_low = 1000;
             avg_windSpeed = 0;
             avg_humidity = 0;
             dataPts = 0;
-            console.log(iconsUsed);
             iconsUsed = {
                 "clearSky": 0,
                 "fewClouds": 0,
@@ -205,14 +194,38 @@ function buildForecast(city){
 }
 
 function mostIcon(iconList){
+    const iconID ={
+        "clearSky": "01",
+        "fewClouds": "02",
+        "scatteredClouds": "03",
+        "brokenClouds": "04",
+        "showerRain": "09",
+        "rain": "10",
+        "thunderstorm": "11",
+        "snow": "13",
+        "mist": "50",
+    }
     var mostName = "";
     var mostNum = -1;
     
     for (icon in iconList) {
-        console.log(`${icon} -> ${iconList[icon]}`)
-      }
-
-      return 0;
+        if(iconList[icon] > mostNum){
+            mostNum = iconList[icon];
+            mostName = icon;
+        }
+    }
+    
+    switch(mostName){
+        case "clearSky": return iconID.clearSky;
+        case "fewClouds": return iconID.fewClouds;
+        case "scatteredClouds": return iconID.scatteredClouds;
+        case "brokenClouds": return iconID.brokenClouds;
+        case "showerRain": return iconID.showerRain;
+        case "rain": return iconID.rain;
+        case "thunderstorm": return iconID.thunderstorm;
+        case "snow": return iconID.snow;
+        case "mist": return iconID.mist;
+    }
 }
 
 
