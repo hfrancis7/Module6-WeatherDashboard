@@ -87,6 +87,18 @@ function buildForecast(city){
         "snow": 0,
         "mist": 0,
     }
+    const iconID =
+    {
+        "clearSky": "01",
+        "fewClouds": "02",
+        "scatteredClouds": "03",
+        "brokenClouds": "04",
+        "showerRain": "09",
+        "rain": "10",
+        "thunderstorm": "11",
+        "snow": "13",
+        "mist": "50",
+    }
 
     //get date from each object
     for(i = 0; i < API_forecastList.length; i++){
@@ -127,6 +139,7 @@ function buildForecast(city){
                 
             }
             console.log("newForecast", newForecast);
+            mostIcon(iconsUsed);
             forecasts.push(newForecast);
             temp_high = -1000;
             temp_low = 1000;
@@ -189,6 +202,17 @@ function buildForecast(city){
 
     
 
+}
+
+function mostIcon(iconList){
+    var mostName = "";
+    var mostNum = -1;
+    
+    for (icon in iconList) {
+        console.log(`${icon} -> ${iconList[icon]}`)
+      }
+
+      return 0;
 }
 
 
