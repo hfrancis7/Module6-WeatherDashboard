@@ -72,9 +72,10 @@ function buildForecast(city){
     var API_forecastList = city.list;
     var today = dayjs().format("MM/DD/YY");
     var forecasts = [];
-    var temp_high = 0;
+    var temp_high = -1000;
     var temp_low = 1000;
     var prevDate = today;
+    var curDate = today;
 
     //get date from each object
     for(i = 0; i < API_forecastList.length; i++){
@@ -82,32 +83,59 @@ function buildForecast(city){
        //if we are at i=0, then we just save the current date.
        //if the prevDate doesn't equal the current date, then we save the results and reset the process
         var dateUnix = API_forecastList[i].dt;
-        var date = dayjs.unix(dateUnix).format("MM/DD/YY");
+        curDate = dayjs.unix(dateUnix).format("MM/DD/YY");
         if(i != 0){
             var prevDateUnix = API_forecastList[i-1].dt;
             prevDate = dayjs.unix(prevDateUnix).format("MM/DD/YY");
         }else{
-            prevDate = date;
+            prevDate = curDate;
         }
-
-
-        if(date == today){
+        console.log("i", i);
+        console.log("currentDate", curDate);
+        console.log("prevDate", prevDate);
+        //if the date is today, then we move on to the next iteration of the loop
+        if(curDate == today){
+            console.log("continued", true);
             continue;
         }
+
+        //if the dates have transitioned to the next day, save the previous date's data and reset
+        if(curDate != prevDate){
+            var newForecast = {
+                date: prevDate,
+                highTemp: temp_high,
+                lowTemp: temp_low,
+            }
+            console.log("newForecast", newForecast)
+            forecasts.push(newForecast);
+            temp_high = -1000;
+            temp_low = 1000;
+        }
+
         if(temp_high < city.list[i].main.temp_max){
             temp_high = city.list[i].main.temp_max;
         }
         if(temp_low > city.list[i].main.temp_min){
             temp_low = city.list[i].main.temp_min;
         }
-
-        console.log("date",date);
-        console.log ("temp_high",temp_high);
         console.log("temp_low", temp_low);
-
+        console.log("temp_high", temp_high);
         
 
+        // console.log("date",date);
+        // console.log ("temp_high",temp_high);
+        // console.log("temp_low", temp_low);
     }
+
+    //log the last forecast
+    var lastForecast = {
+        date: curDate,
+        highTemp: temp_high,
+        lowTemp: temp_low,
+    }
+    forecasts.push(lastForecast);
+
+    return forecasts;
 
     
 
@@ -144,6 +172,8 @@ function displayList(){
 
 
 function display_5day(city){
+    var forecastList = buildForecast(city);
+    console.log(forecastList);
     $(".forecast-day-container").show();
     day1.children("h4").text("Test/Date/1");
     day2.children("h4").text("Test/Date/2");
