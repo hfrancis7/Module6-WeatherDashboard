@@ -103,7 +103,7 @@ function buildForecast(city){
                 highTemp: temp_high,
                 lowTemp: temp_low,
                 windSpeed: (avg_windSpeed / dataPts).toFixed(2), //find the mean wind speed to 2 decimal places
-                //humidity: (avg_humidity / dataPts).toFixed(0), //finds the mean humidity
+                humidity: (avg_humidity / dataPts).toFixed(0), //finds the mean humidity
                 
             }
             console.log("newForecast", newForecast)
@@ -111,7 +111,7 @@ function buildForecast(city){
             temp_high = -1000;
             temp_low = 1000;
             avg_windSpeed = 0;
-            //avg_humidity = 0;
+            avg_humidity = 0;
             dataPts = 0;
         }
 
@@ -122,9 +122,20 @@ function buildForecast(city){
             temp_low = city.list[i].main.temp_min;
         }
         avg_windSpeed += city.list[i].wind.speed; //adding up all wind speeds of current day
-        //avg_humidity += city.list[i].main.humidity; //adding up all humidity
+        avg_humidity += city.list[i].main.humidity; //adding up all humidity
         dataPts++; //getting data points for current day to later divide by
     }
+
+    //there was likely a way to do this in the loop to avoid repetition
+    //but due to lack of time, doing a quick fix
+    var lastForecast = {
+        date: curDate,
+        highTemp: temp_high,
+        lowTemp: temp_low,
+        windSpeed: (avg_windSpeed / dataPts).toFixed(2), //find the mean wind speed to 2 decimal places
+        humidity: (avg_humidity / dataPts).toFixed(0), //finds the mean humidity
+    }
+    forecasts.push(lastForecast);
 
     return forecasts;
 
@@ -174,7 +185,7 @@ function display_5day(city){
         $(this).children(".high").text("High: " + forecastList[i].highTemp + "\u00B0F");
         $(this).children(".low").text("Low: " + forecastList[i].lowTemp + "\u00B0F");
         $(this).children(".wind").text("Avg Wind: " + forecastList[i].windSpeed + " MPH");
-        //$(this).children(".humidity").text("Avg Humidity: " + forecastList[i].humidity + "%");
+        $(this).children(".humidity").text("Avg Humidity: " + forecastList[i].humidity + "%");
         i++;
     })
     
