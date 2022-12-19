@@ -1,5 +1,9 @@
 const API_KEY = "861f2cb6b96250af24f566edb2fe2923";
 
+//TODO:
+    //add icons for each day
+    //styling for media query (using css but putting here as reminder)
+
 //calls the fetchWeatherAPI function and clears the search input
 function search(){
     var searchInput = $("#search-input").val();
