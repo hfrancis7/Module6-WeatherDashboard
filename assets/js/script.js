@@ -59,9 +59,11 @@ function fetchForecastAPI(input){
 
 //builds an array of forecast objects that can used to display the average 5-day forecast weather info
 function buildForecast(city){
-    //API returns 40 forecasts, 3 hour increments. 
+    //API returns 40 forecasts, 3 hour increments.
+    console.log(city); 
     var API_forecastList = city.list;
     var today = dayjs().format("MM/DD/YY");
+    console.log("today",today)
     var forecasts = [];
     var temp_high = -1000;
     var temp_low = 1000;
@@ -85,12 +87,17 @@ function buildForecast(city){
             prevDate = curDate;
         }
         //if the date is today, then we move on to the next iteration of the loop
+        console.log("i",i);
+        console.log("curDate",curDate);
+        console.log("today",today);
+
         if(curDate == today){
+            console.log("continue", true)
             continue;
         }
 
         //if the dates have transitioned to the next day, save the previous date's data and reset
-        if(curDate != prevDate){
+        if((curDate != prevDate) && (prevDate != today)){
             var newForecast = {
                 date: prevDate,
                 highTemp: temp_high,
