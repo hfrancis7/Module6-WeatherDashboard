@@ -85,3 +85,18 @@ a{
 a:hover{
     color: lightblue;
 }
+
+.custom-flex{
+    display: flex;
+}
+
+@media screen and (max-width: 1024px){
+    .custom-flex{
+        display: flex;
+        flex-direction: column;
+    }    
+}
+
+@media screen and (max-width: 428px){
+    
+}
