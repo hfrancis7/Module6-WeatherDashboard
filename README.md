@@ -16,6 +16,8 @@ N/A
 ## Usage
 - Enter in a city name and click "search" to get the current weather and 5 day forecast
 - Once you've entered a valid city name, a button will be created with the name of the button. Clicking on this button pulls up the weather information on that city.
+![Main Page for Weather Dashboard](./assets/screenshots/mainScreen.jpg)
+
 
 ## Tools/APIs used
 - [jQuery](https://api.jquery.com/)
