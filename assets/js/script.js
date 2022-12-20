@@ -9,7 +9,7 @@ function search(){
 
 //crates a fetch for weather, returning alerts if there are errors, returning API data if status ok, calls functions to display data from API
 function fetchWeatherAPI(input){
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=" + API_KEY +"&units=imperial";
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=" + API_KEY +"&units=imperial";
     fetch(queryURL)
         .then(function(response){
             if(response.ok){
@@ -37,7 +37,7 @@ function fetchWeatherAPI(input){
 
 //creates a fetch for 5day forecast, returns alerts if there are errors, returning API data if status ok, calls functions to display 5-day forecast
 function fetchForecastAPI(input){
-    var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + input + "&appid=" + API_KEY +"&units=imperial&";
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + input + "&appid=" + API_KEY +"&units=imperial&";
     fetch(queryURL)
         .then(function(response){
             if(response.ok){
@@ -230,7 +230,7 @@ function mostIcon(iconList){
 function displayToday(city){
     var dateTest = dayjs.unix(city.dt).format("MM/DD/YY");
     $("#today-city-name").text(city.name + " ("+ dateTest +") ");
-    $("#icon").attr("src","http://openweathermap.org/img/w/" + city.weather[0].icon + ".png")
+    $("#icon").attr("src","https://openweathermap.org/img/w/" + city.weather[0].icon + ".png")
     $("#today-city-temp").text("Temperature: " + city.main.temp + "\u00B0F");
     $("#today-city-wind").text("Wind: " + city.wind.speed + " MPH");
     $("#today-city-humidity").text("Humidity: " + city.main.humidity + "%");
@@ -263,7 +263,7 @@ function display_5day(city){
     var i = 0;
     $(".forecast-day-container").each(function(){
         $(this).children(".current-forecast-date").text(forecastList[i].date);
-        $(this).children("img").attr("src","http://openweathermap.org/img/w/" + forecastList[i].icon + ".png");
+        $(this).children("img").attr("src","https://openweathermap.org/img/w/" + forecastList[i].icon + ".png");
         $(this).children(".high").text("High: " + forecastList[i].highTemp + "\u00B0F");
         $(this).children(".low").text("Low: " + forecastList[i].lowTemp + "\u00B0F");
         $(this).children(".wind").text("Avg Wind: " + forecastList[i].windSpeed + " MPH");
