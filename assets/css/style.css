@@ -86,10 +86,12 @@ a:hover{
     color: lightblue;
 }
 
+/*so that media query can change flex*/
 .custom-flex{
     display: flex;
 }
 
+/*changing forecast flex */
 @media screen and (max-width: 1024px){
     .custom-flex{
         display: flex;
@@ -97,6 +99,13 @@ a:hover{
     }    
 }
 
+/*might be reduntant, trying to fix sizing issue in media query*/
 @media screen and (max-width: 428px){
-    
+    h3{
+        font-size: 16px;
+    }
+    input{
+        width: 100%;
+    }
+
 }
