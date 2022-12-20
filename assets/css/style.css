@@ -25,8 +25,8 @@
 .forecast-day-container{
     display: none;
     color: white;
-    background-color: darkblue;
-    border: 1px solid darkblue;
+    background-color: #386087;
+    border: 1px solid #386087;
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
